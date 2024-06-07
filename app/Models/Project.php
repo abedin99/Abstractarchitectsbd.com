@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Service extends Model
+class Project extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -20,16 +20,20 @@ class Service extends Model
         'title',
         'slug',
         'content',
+        'date',
+        'location',
+        'value',
+        'client',
         'status',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be mutated to dates.
      *
-     * @var array<int, string>
+     * @var array
      */
-    protected $hidden = [
-        // 
+    protected $dates = [
+        'date',
     ];
 
     /**
@@ -38,14 +42,16 @@ class Service extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'date' => 'date',
+        'value' => 'integer',
         'status' => 'boolean'
     ];
-
+    
     /**
-     * Get the project's service.
+     * Get the service that owns the project.
      */
-    public function projects(): HasMany
+    public function service(): BelongsTo
     {
-        return $this->hasMany(Project::class);
+        return $this->belongsTo(Service::class);
     }
 }

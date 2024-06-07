@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->foreignId('service_id')->constrained()->cascadeOnDelete();
             $table->string('title', 511);
             $table->string('slug', 511)->unique();
             $table->longText('content', 255)->nullable();
+            $table->date('date');
+            $table->string('location', 511);
+            $table->integer('value');
+            $table->string('client', 511);
             $table->boolean('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('projects');
     }
 };
