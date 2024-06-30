@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -11,7 +13,9 @@ class BlogController extends Controller
      */
     public function index()
     {
-        return view('blogs.index');
+        $categories = Category::withCount('posts')->whereStatus(true)->get();
+        $posts = Post::with('categories')->whereStatus(true)->orderByDesc('id')->paginate(10);
+        return view('blogs.index', compact('categories', 'posts'));
     }
 
     /**

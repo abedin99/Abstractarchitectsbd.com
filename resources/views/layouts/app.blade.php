@@ -83,7 +83,7 @@
                                         <li><a href="{{ route('about') }}">About</a></li>
                                         <li><a href="{{ route('projects') }}">Services</a></li>
                                         <li><a href="{{ route('services') }}">Project</a></li>
-                                        <li><a href="{{ route('blog.index') }}">Project</a></li>
+                                        <li><a href="{{ route('blog.index') }}">Blog</a></li>
                                         <li><a href="{{ route('contact') }}">contact</a></li>
                                     </ul>
                                 </nav>
