@@ -81,8 +81,19 @@
                                     <ul id="navigation">
                                         <li><a href="{{ route('index') }}">Home</a></li>
                                         <li><a href="{{ route('about') }}">About</a></li>
-                                        <li><a href="{{ route('projects') }}">Services</a></li>
-                                        <li><a href="{{ route('services') }}">Project</a></li>
+                                        <!-- Dropdown -->
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="{{ route('services') }}" id="navbardrop"
+                                                data-toggle="dropdown">
+                                                Services
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                @foreach ($services as $service)
+                                                    <a class="dropdown-item" href="{{ route('services') }}">{{ $service->title }}</a>
+                                                @endforeach
+                                            </div>
+                                        </li>
+                                        <li><a href="{{ route('projects') }}">Project</a></li>
                                         <li><a href="{{ route('blog.index') }}">Blog</a></li>
                                         <li><a href="{{ route('contact') }}">contact</a></li>
                                     </ul>
@@ -179,12 +190,7 @@
                         <div class="col-xl-7 col-lg-8 col-md-7">
                             <div class="footer-copy-right">
                                 <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;
-                                    <script>
-                                        document.write(new Date().getFullYear());
-                                    </script> All rights reserved | This template is made with <i
-                                        class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                                        target="_blank">Colorlib</a>
+                                    Copyright &copy; 2024 All rights reserved
                                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 </p>
                             </div>
