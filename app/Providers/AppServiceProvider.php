@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useBootstrap();
+        
+        if (Schema::hasTable(app(Category::class)->getTable())) {
+            view()->composer('blogs.partial.categories', function ($view) {
+                $view->with([
+                    'categories' => Category::withCount('posts')->whereStatus(true)->get(),
+                ]);
+            });
+        }
     }
 }

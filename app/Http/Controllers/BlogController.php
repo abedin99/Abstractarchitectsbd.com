@@ -13,9 +13,8 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $categories = Category::withCount('posts')->whereStatus(true)->get();
         $posts = Post::with('categories')->whereStatus(true)->orderByDesc('id')->paginate(10);
-        return view('blogs.index', compact('categories', 'posts'));
+        return view('blogs.index', compact('posts'));
     }
 
     /**
@@ -37,9 +36,10 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        return view('blogs.show');
+        $post = Post::with('categories')->whereSlug($slug)->whereStatus(true)->orderByDesc('id')->firstOrFail();
+        return view('blogs.show', compact('post'));
     }
 
     /**

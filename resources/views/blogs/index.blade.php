@@ -41,7 +41,11 @@
                             @foreach ($posts as $post)
                                 <article class="blog_item">
                                     <div class="blog_item_img">
-                                        <img class="card-img rounded-0" src="{{ asset($post->thumbnail) }}" alt="">
+                                        @if (Storage::disk('public')->has($post->thumbnail))
+                                            <img class="card-img rounded-0" src="{{ Storage::disk('public')->url($post->thumbnail); }}" alt="{{ $post->thumbnail }}">
+                                        @else
+                                            <img class="card-img rounded-0" src="{{ asset('assets/img/no-image.jpg') }}" alt="{{ $post->title }}">
+                                        @endif
                                         <a href="#" class="blog_item_date">
                                             <h3>{{ $post->created_at->format('d') }}</h3>
                                             <p>{{ $post->created_at->format('F') }}</p>
@@ -66,24 +70,7 @@
                             @endforeach
 
                             <nav class="blog-pagination justify-content-center d-flex">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a href="#" class="page-link" aria-label="Previous">
-                                            <i class="ti-angle-left"></i>
-                                        </a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">1</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a href="#" class="page-link">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link" aria-label="Next">
-                                            <i class="ti-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
+		    	                {!! $posts->appends(request()->all())->links() !!}
                             </nav>
                         </div>
                     </div>
